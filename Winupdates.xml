@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>4.4</version>
-    <date>2020-05-20T06:47:00Z</date>
+    <date>2020-05-20T09:30:39Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -29,7 +29,7 @@
                     <name>WinUpdate-Check</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.run[@&quot;%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe&quot; -NoProfile -ExecutionPolicy Bypass -file &quot;$Env:Programfiles\Zabbix Agent\plugins\check_win_updates2020.ps1&quot;,nowait]</key>
-                    <delay>1d</delay>
+                    <delay>1h</delay>
                     <history>30d</history>
                     <trends>0</trends>
                     <value_type>LOG</value_type>
@@ -66,6 +66,11 @@
                         </application>
                     </applications>
                     <triggers>
+                        <trigger>
+                            <expression>{last()}&gt;3</expression>
+                            <name>There are a number of critical updates for {HOST.NAME}</name>
+                            <priority>AVERAGE</priority>
+                        </trigger>
                         <trigger>
                             <expression>{last()}&gt;0</expression>
                             <name>There are critical updates for {HOST.NAME}</name>
@@ -124,6 +129,11 @@
                         </application>
                     </applications>
                     <triggers>
+                        <trigger>
+                            <expression>{last()}&gt;5</expression>
+                            <name>There are a large number of optional updates for {HOST.NAME}</name>
+                            <priority>WARNING</priority>
+                        </trigger>
                         <trigger>
                             <expression>{last()}&gt;0</expression>
                             <name>There are optional updates for {HOST.NAME}</name>
