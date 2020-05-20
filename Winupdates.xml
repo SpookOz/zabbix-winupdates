@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>4.4</version>
-    <date>2020-05-20T06:43:24Z</date>
+    <date>2020-05-20T06:47:00Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -42,7 +42,7 @@
                 <item>
                     <name>Deploy PS Script</name>
                     <type>ZABBIX_ACTIVE</type>
-                    <key>system.run[powershell.exe -NoProfile -ExecutionPolicy Bypass -command Invoke-WebRequest -Uri https://git.io/JfzKT -OutFile $Env:Programfiles\'Zabbix Agent\plugins\check_win_updates2020-test.ps1',nowait]</key>
+                    <key>system.run[powershell.exe -NoProfile -ExecutionPolicy Bypass -command Invoke-WebRequest -Uri https://git.io/JfzKT -OutFile $Env:Programfiles\'Zabbix Agent\plugins\check_win_updates2020.ps1',nowait]</key>
                     <delay>1h</delay>
                     <trends>0</trends>
                     <value_type>LOG</value_type>
