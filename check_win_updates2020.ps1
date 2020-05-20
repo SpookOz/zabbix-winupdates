@@ -45,7 +45,7 @@ $SenderargcountOptional = '\countOptional.txt'
 $SenderargcountHidden = '\countHidden.txt'
 $Countcriticalnum = '\countcriticalnum.txt'
 $Senderarg5 = '-k'
-$Senderargupdating = 'CHQ.WUUpdating'
+$Senderargupdating = 'Winupdates.Updating'
 $Senderarg6 = '-o'
 $Senderarg7 = '0'
 $Senderarg8 = '1'
@@ -61,16 +61,16 @@ If(!(test-path $reportpath))
 # ------------------------------------------------------------------------- #
 
 $windowsUpdateObject = New-Object -ComObject Microsoft.Update.AutoUpdate
-Write-Output "- CHQ.WULastUpdated $($windowsUpdateObject.Results.LastInstallationSuccessDate)" | Out-File -Encoding "ASCII" -FilePath $env:temp$Senderarglastupdated
+Write-Output "- Winupdates.LastUpdated $($windowsUpdateObject.Results.LastInstallationSuccessDate)" | Out-File -Encoding "ASCII" -FilePath $env:temp$Senderarglastupdated
 
 # ------------------------------------------------------------------------- #
 # This part get the reboot status and writes to test file
 # ------------------------------------------------------------------------- #
 
 if (Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired"){ 
-	Write-Output "- CHQ.WUReboot 1" | Out-File -Encoding "ASCII" -FilePath $env:temp$SenderargUpdateReboot
+	Write-Output "- Winupdates.Reboot 1" | Out-File -Encoding "ASCII" -FilePath $env:temp$SenderargUpdateReboot
 }else {
-	Write-Output "- CHQ.WUReboot 0" | Out-File -Encoding "ASCII" -FilePath $env:temp$SenderargUpdateReboot
+	Write-Output "- Winupdates.Reboot 0" | Out-File -Encoding "ASCII" -FilePath $env:temp$SenderargUpdateReboot
 		}
 # ------------------------------------------------------------------------- #		
 # This part checks available Windows updates
@@ -91,9 +91,9 @@ $countHidden = 0;
 if ($updates.Count -eq 0) {
 
 	$countCritical | Out-File -Encoding "ASCII" -FilePath $env:temp$Countcriticalnum
-	Write-Output "- CHQ.WUCritical $($countCritical)" | Out-File -Encoding "ASCII" -FilePath $env:temp$Senderargcountcritical
-	Write-Output "- CHQ.WUOptional $($countOptional)" | Out-File -Encoding "ASCII" -FilePath $env:temp$SenderargcountOptional
-	Write-Output "- CHQ.WUHidden $($countHidden)" | Out-File -Encoding "ASCII" -FilePath $env:temp$SenderargcountHidden
+	Write-Output "- Winupdates.Critical $($countCritical)" | Out-File -Encoding "ASCII" -FilePath $env:temp$Senderargcountcritical
+	Write-Output "- Winupdates.Optional $($countOptional)" | Out-File -Encoding "ASCII" -FilePath $env:temp$SenderargcountOptional
+	Write-Output "- Winupdates.Hidden $($countHidden)" | Out-File -Encoding "ASCII" -FilePath $env:temp$SenderargcountHidden
 	
 	& $Sender $Senderarg1 $Senderarg2 $Senderarg3 $Senderarg4 $env:temp$SenderargUpdateReboot
 	& $Sender $Senderarg1 $Senderarg2 $Senderarg3 $Senderarg4 $env:temp$Senderarglastupdated
@@ -128,9 +128,9 @@ foreach ($update in $updates) {
 if (($countCritical + $countOptional) -gt 0) {
 
 	$countCritical | Out-File -Encoding "ASCII" -FilePath $env:temp$Countcriticalnum
-	Write-Output "- CHQ.WUCritical $($countCritical)" | Out-File -Encoding "ASCII" -FilePath $env:temp$Senderargcountcritical
-	Write-Output "- CHQ.WUOptional $($countOptional)" | Out-File -Encoding "ASCII" -FilePath $env:temp$SenderargcountOptional
-	Write-Output "- CHQ.WUHidden $($countHidden)" | Out-File -Encoding "ASCII" -FilePath $env:temp$SenderargcountHidden
+	Write-Output "- Winupdates.Critical $($countCritical)" | Out-File -Encoding "ASCII" -FilePath $env:temp$Senderargcountcritical
+	Write-Output "- Winupdates.Optional $($countOptional)" | Out-File -Encoding "ASCII" -FilePath $env:temp$SenderargcountOptional
+	Write-Output "- Winupdates.Hidden $($countHidden)" | Out-File -Encoding "ASCII" -FilePath $env:temp$SenderargcountHidden
 	
     & $Sender $Senderarg1 $Senderarg2 $Senderarg3 $Senderarg4 $env:temp$SenderargUpdateReboot
 	& $Sender $Senderarg1 $Senderarg2 $Senderarg3 $Senderarg4 $env:temp$Senderarglastupdated
@@ -257,9 +257,9 @@ if ($countOptional -gt 0) {
 if ($countHidden -gt 0) {
 	
 	$countCritical | Out-File -Encoding "ASCII" -FilePath $env:temp$Countcriticalnum
-	Write-Output "- CHQ.WUCritical $($countCritical)" | Out-File -Encoding "ASCII" -FilePath $env:temp$Senderargcountcritical
-	Write-Output "- CHQ.WUOptional $($countOptional)" | Out-File -Encoding "ASCII" -FilePath $env:temp$SenderargcountOptional
-	Write-Output "- CHQ.WUHidden $($countHidden)" | Out-File -Encoding "ASCII" -FilePath $env:temp$SenderargcountHidden
+	Write-Output "- Winupdates.Critical $($countCritical)" | Out-File -Encoding "ASCII" -FilePath $env:temp$Senderargcountcritical
+	Write-Output "- Winupdates.Optional $($countOptional)" | Out-File -Encoding "ASCII" -FilePath $env:temp$SenderargcountOptional
+	Write-Output "- Winupdates.Hidden $($countHidden)" | Out-File -Encoding "ASCII" -FilePath $env:temp$SenderargcountHidden
 	
 	& $Sender $Senderarg1 $Senderarg2 $Senderarg3 $Senderarg4 $env:temp$SenderargUpdateReboot
 	& $Sender $Senderarg1 $Senderarg2 $Senderarg3 $Senderarg4 $env:temp$Senderarglastupdated
