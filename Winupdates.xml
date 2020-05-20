@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>4.4</version>
-    <date>2020-05-20T11:20:05Z</date>
+    <date>2020-05-20T11:26:18Z</date>
     <groups>
         <group>
             <name>CHQ - Windows Desktops</name>
@@ -41,8 +41,9 @@
                     <name>Deploy PS Script</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.run[powershell.exe -NoProfile -ExecutionPolicy Bypass -command Invoke-WebRequest -Uri https://git.io/JfzKT -OutFile $Env:Programfiles\'Zabbix Agent\plugins\check_win_updates2020.ps1',nowait]</key>
-                    <delay>1h</delay>
+                    <delay>1d</delay>
                     <trends>0</trends>
+                    <status>DISABLED</status>
                     <value_type>LOG</value_type>
                     <applications>
                         <application>
@@ -54,7 +55,7 @@
                     <name>WinUpdate-Check</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.run[powershell.exe -NoProfile -ExecutionPolicy Bypass -file &quot;%programfiles%\Zabbix Agent\plugins\check_win_updates2020.ps1&quot;,nowait]</key>
-                    <delay>1h</delay>
+                    <delay>1d</delay>
                     <history>30d</history>
                     <trends>0</trends>
                     <value_type>LOG</value_type>
