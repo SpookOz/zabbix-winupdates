@@ -13,7 +13,7 @@ This is a Zabbix template to monitor and (optionally) run Windows updates for ac
 - As part of above it writes a report file to C:\IT\Winupdates by default. This can be changed in the Powershell Script
 - Includes a panel for the Dashboard.
 - Includes triggers to warn for different update states.
-- Includes an option to auto-download the Powershell script so you don't have to manually deply it to your hosts (disabled by default).
+- Includes an option to auto-download the Powershell script so you don't have to manually deploy it to your hosts (disabled by default).
 
 
 ## Requirements
@@ -42,19 +42,19 @@ Choose this option if you want to make any changes to the PowerShell script. You
 
 You also need to choose this option if you want to disable the auto-update feature.
 
-1. Create a subfolder called "plugins" in your Zabbix Agent install folder (eg: C:\Program Files\Zabbix Agent\plugins).
+1. Create a sub-folder called "plugins" in your Zabbix Agent install folder (eg: C:\Program Files\Zabbix Agent\plugins).
 2. Download check_win_updates2020.ps1 from Github and make any changes you need to it. Check the .ps file for instructions on making changes.
 3. Copy check_win_updates2020.ps1 to the plugins directory.
 
 ### Option 2 - Automatic Deployment of the Powershell script
 
-This is a good option if you have a nmber of hosts you want to monitor but don't have an easy way to deploy the PS script to them all.
+This is a good option if you have a number of hosts you want to monitor but don't have an easy way to deploy the PS script to them all.
 
-1. Edit the templatein Zabbix (Configuration / Templates / WinUpdates).
+1. Edit the template in Zabbix (Configuration / Templates / WinUpdates).
 2. Go to the "Items" tab.
 3. You will see a disabled item called "Deploy PS Script". CLick on it to edit it.
 4. Click the button to enable the item and click "Update".
-5. Once all hosts have received the script, disable this item again, or it will redownload the script every day!
+5. Once all hosts have received the script, disable this item again, or it will re-download the script every day!
 
 The item has a 1d update interval, so it may take up to a day for the PowerShell script to download. You can shorten this if you like.
 
