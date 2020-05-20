@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>4.4</version>
-    <date>2020-05-20T09:30:39Z</date>
+    <date>2020-05-20T11:20:05Z</date>
     <groups>
+        <group>
+            <name>CHQ - Windows Desktops</name>
+        </group>
+        <group>
+            <name>CHQ - Windows Servers</name>
+        </group>
         <group>
             <name>Templates</name>
         </group>
@@ -12,6 +18,12 @@
             <template>WinUpdates</template>
             <name>WinUpdates</name>
             <groups>
+                <group>
+                    <name>CHQ - Windows Desktops</name>
+                </group>
+                <group>
+                    <name>CHQ - Windows Servers</name>
+                </group>
                 <group>
                     <name>Templates</name>
                 </group>
@@ -26,11 +38,10 @@
             </applications>
             <items>
                 <item>
-                    <name>WinUpdate-Check</name>
+                    <name>Deploy PS Script</name>
                     <type>ZABBIX_ACTIVE</type>
-                    <key>system.run[@&quot;%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe&quot; -NoProfile -ExecutionPolicy Bypass -file &quot;$Env:Programfiles\Zabbix Agent\plugins\check_win_updates2020.ps1&quot;,nowait]</key>
+                    <key>system.run[powershell.exe -NoProfile -ExecutionPolicy Bypass -command Invoke-WebRequest -Uri https://git.io/JfzKT -OutFile $Env:Programfiles\'Zabbix Agent\plugins\check_win_updates2020.ps1',nowait]</key>
                     <delay>1h</delay>
-                    <history>30d</history>
                     <trends>0</trends>
                     <value_type>LOG</value_type>
                     <applications>
@@ -40,10 +51,11 @@
                     </applications>
                 </item>
                 <item>
-                    <name>Deploy PS Script</name>
+                    <name>WinUpdate-Check</name>
                     <type>ZABBIX_ACTIVE</type>
-                    <key>system.run[powershell.exe -NoProfile -ExecutionPolicy Bypass -command Invoke-WebRequest -Uri https://git.io/JfzKT -OutFile $Env:Programfiles\'Zabbix Agent\plugins\check_win_updates2020.ps1',nowait]</key>
+                    <key>system.run[powershell.exe -NoProfile -ExecutionPolicy Bypass -file &quot;%programfiles%\Zabbix Agent\plugins\check_win_updates2020.ps1&quot;,nowait]</key>
                     <delay>1h</delay>
+                    <history>30d</history>
                     <trends>0</trends>
                     <value_type>LOG</value_type>
                     <applications>
