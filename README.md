@@ -1,6 +1,6 @@
 # zabbix-winupdates
 
-This is a Zabbix template to monitor and (optionally) run Windows updates. It has been tested on Zabbix 4.4.8 with active Windows 10 agents. Currently needs testing with passive agents, other Windows versions and other Zabbix versions.
+This is a Zabbix template to monitor and (optionally) run Windows updates for active Windows agents. It has been tested on Zabbix 4.4.8 with Windows 81., 10 and server 2019. Currently needs testing with other Windows versions and other Zabbix versions.
 
 
 ## Features
@@ -18,9 +18,10 @@ This is a Zabbix template to monitor and (optionally) run Windows updates. It ha
 
 ## Requirements
 
-- Has only been tested with Zabbix active agents. I'm unsure if it will work with passive agents.
+- Has only been tested with Zabbix active agents. It will need tweaking to work with passive agents.
 - At this stage it has only been tested on Windows 8.1, 10 and Server 2019. However, it should also work on server 2016 and Windows 7. Not sure about previous versions at this stage.
-- You NEED to have EnableRemoteCommands=1 in your conf file (so it can actually run the PS script).
+- You MUST have EnableRemoteCommands=1 in your conf file (so it can run the PS script).
+- This script assumes the Zabbix client is installed in the PRogram Files directory. You will need to modify the Powershell script if it is not.
 
 
 ## Files Included
@@ -33,7 +34,7 @@ This is a Zabbix template to monitor and (optionally) run Windows updates. It ha
 
 1. Ensure your Windows hosts have the agent installed and configured correctly and they are communicating with the Zabbix server.
 2. Make sure you have edited the zabbix_agentd.conf file to include the line: EnableRemoteCommands=1.
-3. Download Winupdate.xml template from Github and import the template in Zabbix and apply it to one or more Windows Hosts.
+3. Download Winupdates.xml template from Github and import the template in Zabbix and apply it to one or more Windows Hosts.
 
 ### Option 1 - Deply Powershell Script Manually
 
