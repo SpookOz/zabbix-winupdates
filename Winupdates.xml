@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>4.4</version>
+    <date>2020-05-20T06:43:24Z</date>
+    <groups>
+        <group>
+            <name>Templates</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>WinUpdates</template>
+            <name>WinUpdates</name>
+            <groups>
+                <group>
+                    <name>Templates</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>Winupdates</name>
+                </application>
+                <application>
+                    <name>Winupdates-Panel</name>
+                </application>
+            </applications>
+            <items>
+                <item>
+                    <name>WinUpdate-Check</name>
+                    <type>ZABBIX_ACTIVE</type>
+                    <key>system.run[@&quot;%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe&quot; -NoProfile -ExecutionPolicy Bypass -file &quot;$Env:Programfiles\Zabbix Agent\plugins\check_win_updates2020.ps1&quot;,nowait]</key>
+                    <delay>1d</delay>
+                    <history>30d</history>
+                    <trends>0</trends>
+                    <value_type>LOG</value_type>
+                    <applications>
+                        <application>
+                            <name>Winupdates</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Deploy PS Script</name>
+                    <type>ZABBIX_ACTIVE</type>
+                    <key>system.run[powershell.exe -NoProfile -ExecutionPolicy Bypass -command Invoke-WebRequest -Uri https://git.io/JfzKT -OutFile $Env:Programfiles\'Zabbix Agent\plugins\check_win_updates2020-test.ps1',nowait]</key>
+                    <delay>1h</delay>
+                    <trends>0</trends>
+                    <value_type>LOG</value_type>
+                    <applications>
+                        <application>
+                            <name>Winupdates</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Critical Updates</name>
+                    <type>TRAP</type>
+                    <key>Winupdates.Critical</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>30d</trends>
+                    <description>Number of Critical Windows Updates Available</description>
+                    <applications>
+                        <application>
+                            <name>Winupdates-Panel</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}&gt;0</expression>
+                            <name>There are critical updates for {HOST.NAME}</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>Hidden Updates</name>
+                    <type>TRAP</type>
+                    <key>Winupdates.Hidden</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>30d</trends>
+                    <description>Number of Hidden Windows Updates</description>
+                    <applications>
+                        <application>
+                            <name>Winupdates-Panel</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}&gt;0</expression>
+                            <name>There are hidden updates for {HOST.NAME}</name>
+                            <priority>INFO</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>Last Updated</name>
+                    <type>TRAP</type>
+                    <key>Winupdates.LastUpdated</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <description>Date last Windows updates were applied</description>
+                    <applications>
+                        <application>
+                            <name>Winupdates-Panel</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Optional Updates</name>
+                    <type>TRAP</type>
+                    <key>Winupdates.Optional</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>30d</trends>
+                    <description>Number of Optional Windows Updates Available</description>
+                    <applications>
+                        <application>
+                            <name>Winupdates-Panel</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}&gt;0</expression>
+                            <name>There are optional updates for {HOST.NAME}</name>
+                            <priority>INFO</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>Reboot Required</name>
+                    <type>TRAP</type>
+                    <key>Winupdates.Reboot</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <description>Number of Critical Windows Updates Available</description>
+                    <applications>
+                        <application>
+                            <name>Winupdates-Panel</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>Reboot required for {HOST.NAME}</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>Installing Updates</name>
+                    <type>TRAP</type>
+                    <key>Winupdates.Updating</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>30d</trends>
+                    <description>Windows is installing updates</description>
+                    <applications>
+                        <application>
+                            <name>Winupdates-Panel</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}=1</expression>
+                            <name>{HOST.NAME} is running updates</name>
+                            <priority>INFO</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+            </items>
+        </template>
+    </templates>
+</zabbix_export>
