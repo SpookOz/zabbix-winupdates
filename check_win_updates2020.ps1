@@ -6,7 +6,7 @@
 
 ### If you do not wish the script to install updates, look for the comment in the script that tells you how to disable that function.
 
-#### Check https://github.com/SpookOz/zabbix-winupdates/upload for the latest version of this script
+#### Check https://github.com/SpookOz/zabbix-winupdates for the latest version of this script
 
 # ------------------------------------------------------------------------- #
 # Variables
