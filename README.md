@@ -25,11 +25,11 @@ This is a Zabbix template to monitor and (optionally) run Windows updates for ac
 
 ## Files Included
 
-###<v5
+<v5
 - Winupdates.xml: Template to import into Zabbix.
 - check_win_updates2020.ps1: Powershell script. Must be placed in a "plugins" directory under your Zabbix Agent install folder (eg: C:\Program Files\Zabbix Agent\plugins).
 
-###>v5
+>v5
 - WinupdatesV5.xml: Template to import into Zabbix.
 - check_win_updates-v5.ps1: Powershell script. Must be placed in a "plugins" directory under your Zabbix Agent install folder (eg: C:\Program Files\Zabbix Agent\plugins).
 
