@@ -2,6 +2,9 @@
 
 This is a Zabbix template to monitor and (optionally) run Windows updates for active Windows agents. It has been tested on Zabbix 4.4.8 with Windows 81., 10 and server 2019. Currently needs testing with other Windows versions and other Zabbix versions.
 
+# EDIT.
+I have also uploaded the template for Zabbix V5 clients and above. If your Zabbix clients are >v5, use WinupdatesV5.xml
+
 
 ## Features
 
