@@ -1,14 +1,14 @@
 # zabbix-winupdates
 
-This is a Zabbix template to monitor and (optionally) run Windows updates for active Windows agents. It has been tested on Zabbix 4.4.8 to v6.4 with Windows 8.1, 10, server 2019, and 2022. Currently needs testing with other Windows versions and other Zabbix versions.
+This is a Zabbix template to monitor and (optionally) run Windows updates for active Windows agents. It has been tested on Zabbix 4.4.8 to v5.2 with Windows 8.1, 10 and server 2019. Currently needs testing with other Windows versions and other Zabbix versions.
 
 ## Features
 
 - Works with active agents (behind NAT - so perfect remote sites).
-- Checks for critical updates, important updates, optional updates and hidden updates and reports numbers of each.
+- Checks for critical updates, optional updates and hidden updates and reports numbers of each.
 - Reports date of last updates.
 - Reports if a reboot is pending.
-- If there is a critical or important update pending or 3 or more optional updates, runs Windows Update to patch machine and reports back that updates are running (this can be disabled).
+- If there is a critical update pending or 3 or more optional updates, runs Windows Update to patch machine and reports back that updates are running (this can be disabled).
 - As part of above it writes a report file to C:\IT\Winupdates by default. This can be changed in the Powershell Script
 - Includes a panel for the Dashboard.
 - Includes triggers to warn for different update states.
@@ -18,7 +18,7 @@ This is a Zabbix template to monitor and (optionally) run Windows updates for ac
 ## Requirements
 
 - Has only been tested with Zabbix active agents. It will need tweaking to work with passive agents.
-- At this stage it has only been tested on Windows 8.1, 10, Server 2019 and 2022. However, it should also work on server 2016 and Windows 7. Not sure about previous versions at this stage.
+- At this stage it has only been tested on Windows 8.1, 10 and Server 2019. However, it should also work on server 2016 and Windows 7. Not sure about previous versions at this stage.
 - If you are running <v5 Zabbix agent, you MUST have EnableRemoteCommands=1 in your conf file (so it can run the PS script).
 - If you are running >v5 Zabbix agent, you MUST have AllowKey=system.run[*] in your conf file (https://www.zabbix.com/documentation/current/manual/config/notifications/action/operation/remote_command)
 - This script assumes the Zabbix client is installed in the Program Files directory. You will need to modify the Powershell script if it is not.
