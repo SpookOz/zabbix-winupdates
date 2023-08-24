@@ -161,9 +161,9 @@ if (($countCritical + $countImportant + $countOptional) -gt 0) {
 }   
 
 # ------------------------------------------------------------------------- #
-# The following section will automatically apply any pending updates if it finds any critical updates missing or more than 3 optional updates missing. If you do not want this to run, comment out or delete everything between here and the next comment.
+# The following section will automatically apply any pending updates if it finds any critical updates missing or more than 3 optional updates missing. If you want this to run, remove the <# and #> comment block lines.
 
-
+<#
 if ($countCritical -gt 0 -Or $countImportant -gt 0 -Or $countOptional -gt 2) {
 		
 			& $sender $senderArg1 $senderArg2 $senderArg3 $senderArg5 $senderArgupdating $senderArg6 $senderArg8
@@ -287,8 +287,9 @@ if ($countCritical -gt 0 -Or $countImportant -gt 0 -Or $countOptional -gt 2) {
 
 	exit $returnStateCritical
 }
+#>
 
-# Comment out or delete everything above here to disable automatic updating
+# Remove the comment block lines above here to enable automatic updating
 # ------------------------------------------------------------------------- #
 
 if ($countOptional -gt 0) {
