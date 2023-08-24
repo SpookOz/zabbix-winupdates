@@ -2,11 +2,11 @@
 
 # Version 2.2 - for Zabbix agent 5x
 
-## This script will check for pending Windows Updates, report them to Zabbix, and optionally install the updates.
+## This script will check for pending Windows Updates, report them to Zabbix, and optionally install the updates (disabled by default).
 
-### If you do not wish the script to install updates, look for the comment in the script that tells you how to disable that function.
+### If you want the script to install updates, look for the comment in the script that tells you how to enable that function.
 
-#### Check https://github.com/SpookOz/zabbix-winupdates for the latest version of this script
+#### Check https://github.com/gitBalla/zabbix-winupdates for the latest version of this script from the repository forked from /spookoz/zabbix-winupdates
 
 # ------------------------------------------------------------------------- #
 # Variables
@@ -14,12 +14,12 @@
 
 # Change $reportpath to wherever you want your update reports to go.
 
-$reportpath = "C:\IT\WinUpdates"
+$reportpath = "C:\zabbix\logs\Windows-Updates"
 
 # Change $ZabbixInstallPath to wherever your Zabbix Agent is installed
 
-$ZabbixInstallPath = "$Env:Programfiles\Zabbix Agent"
-$ZabbixConfFile = "$Env:Programdata\zabbix"
+$ZabbixInstallPath = "C:\zabbix\bin"
+$ZabbixConfFile = "C:\zabbix\conf"
 
 # Do not change the following variables unless you know what you are doing
 
@@ -47,7 +47,7 @@ $senderArgCountOptional = '\countOptional.txt'
 $senderArgCountHidden = '\countHidden.txt'
 $CountCriticalNum = '\CountCriticalNum.txt'
 $senderArg5 = '-k'
-$senderArgUpdating = 'Winupdates.Updating'
+$senderArgUpdating = 'Windows-Updates.Updating'
 $senderArg6 = '-o'
 $senderArg7 = '0'
 $senderArg8 = '1'
@@ -66,17 +66,17 @@ If(!(test-path $reportpath))
 # ------------------------------------------------------------------------- #
 
 $windowsUpdateObject = New-Object -ComObject Microsoft.Update.AutoUpdate
-Write-Output "- Winupdates.LastUpdated $($windowsUpdateObject.Results.LastInstallationSuccessDate)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgLastUpdated
+Write-Output "- Windows-Updates.LastUpdated $($windowsUpdateObject.Results.LastInstallationSuccessDate)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgLastUpdated
 
 # ------------------------------------------------------------------------- #
 # This part get the reboot status and writes to test file
 # ------------------------------------------------------------------------- #
 
 if (Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired"){ 
-	Write-Output "- Winupdates.Reboot 1" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgUpdateReboot
+	Write-Output "- Windows-Updates.Reboot 1" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgUpdateReboot
     Write-Host "`t There is a reboot pending" -ForeGroundColor "Red"
 }else {
-	Write-Output "- Winupdates.Reboot 0" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgUpdateReboot
+	Write-Output "- Windows-Updates.Reboot 0" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgUpdateReboot
     Write-Host "`t No reboot pending" -ForeGroundColor "Green"
 		}
 # ------------------------------------------------------------------------- #		
@@ -100,10 +100,10 @@ $countHidden = 0;
 if ($updates.Count -eq 0) {
 
 	$countCritical | Out-File -Encoding "ASCII" -FilePath $env:temp$CountCriticalNum
-	Write-Output "- Winupdates.Critical $($countCritical)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountCritical
-	Write-Output "- Winupdates.Important $($countImportant)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountImportant
-	Write-Output "- Winupdates.Optional $($countOptional)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountOptional
-	Write-Output "- Winupdates.Hidden $($countHidden)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountHidden
+	Write-Output "- Windows-Updates.Critical $($countCritical)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountCritical
+	Write-Output "- Windows-Updates.Important $($countImportant)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountImportant
+	Write-Output "- Windows-Updates.Optional $($countOptional)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountOptional
+	Write-Output "- Windows-Updates.Hidden $($countHidden)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountHidden
     Write-Host "`t There are no pending updates" -ForeGroundColor "Green"
 	
 	& $sender $senderArg1 $senderArg2 $senderArg3 $senderArg4 $env:temp$senderArgUpdateReboot -s "$hostname"
@@ -142,10 +142,10 @@ foreach ($update in $updates) {
 if (($countCritical + $countImportant + $countOptional) -gt 0) {
 
 	$countCritical | Out-File -Encoding "ASCII" -FilePath $env:temp$CountCriticalNum
-	Write-Output "- Winupdates.Critical $($countCritical)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountCritical
-	Write-Output "- Winupdates.Important $($countImportant)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountImportant
-	Write-Output "- Winupdates.Optional $($countOptional)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountOptional
-	Write-Output "- Winupdates.Hidden $($countHidden)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountHidden
+	Write-Output "- Windows-Updates.Critical $($countCritical)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountCritical
+	Write-Output "- Windows-Updates.Important $($countImportant)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountImportant
+	Write-Output "- Windows-Updates.Optional $($countOptional)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountOptional
+	Write-Output "- Windows-Updates.Hidden $($countHidden)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountHidden
     Write-Host "`t There are $($countCritical) critical updates available" -ForeGroundColor "Yellow"
     Write-Host "`t There are $($countImportant) important updates available" -ForeGroundColor "Yellow"
     Write-Host "`t There are $($countOptional) optional updates available" -ForeGroundColor "Yellow"
@@ -182,7 +182,7 @@ if ($countCritical -gt 0 -Or $countImportant -gt 0 -Or $countOptional -gt 2) {
 			Write-Host "`t Initialising and Checking for Applicable Updates. Please wait ..." -ForeGroundColor "Yellow"
 			$Result = $Searcher.Search("IsInstalled=0 and Type='Software' and IsHidden=0")
 
-				$ReportFile = $reportpath + "\" + $hostname + "_WinupdateReport_"  + $TodayFile + ".txt"
+				$ReportFile = $reportpath + "\" + $hostname + "_Windows-UpdatesReport_"  + $TodayFile + ".txt"
 				If (Test-Path $ReportFile) {
 					Remove-Item $ReportFile
 				}
@@ -262,19 +262,19 @@ if ($countCritical -gt 0 -Or $countImportant -gt 0 -Or $countOptional -gt 2) {
 
 
     if (Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired"){ 
-	    Write-Output "- Winupdates.Reboot 1" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgUpdateReboot
+	    Write-Output "- Windows-Updates.Reboot 1" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgUpdateReboot
         Write-Host "`t There is a reboot pending" -ForeGroundColor "Red"
     }else {
-	    Write-Output "- Winupdates.Reboot 0" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgUpdateReboot
+	    Write-Output "- Windows-Updates.Reboot 0" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgUpdateReboot
         Write-Host "`t No reboot pending" -ForeGroundColor "Green"
 		    }
 
     $updates=$updateSession.CreateupdateSearcher().Search(("IsInstalled=0 and Type='Software'")).Updates
 
-    Write-Output "- Winupdates.Critical $($countCritical)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountCritical
-    Write-Output "- Winupdates.Important $($countImportant)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountImportant
-	Write-Output "- Winupdates.Optional $($countOptional)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountOptional
-	Write-Output "- Winupdates.Hidden $($countHidden)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountHidden
+    Write-Output "- Windows-Updates.Critical $($countCritical)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountCritical
+    Write-Output "- Windows-Updates.Important $($countImportant)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountImportant
+	Write-Output "- Windows-Updates.Optional $($countOptional)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountOptional
+	Write-Output "- Windows-Updates.Hidden $($countHidden)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountHidden
     Write-Host "`t There are now $($countCritical) critical updates available" -ForeGroundColor "Yellow"
     Write-Host "`t There are now $($countOptional) optional updates available" -ForeGroundColor "Yellow"
     Write-Host "`t There are now $($countHidden) hidden updates available" -ForeGroundColor "Yellow"
@@ -302,9 +302,9 @@ if ($countOptional -gt 0) {
 if ($countHidden -gt 0) {
 	
 	$countCritical | Out-File -Encoding "ASCII" -FilePath $env:temp$CountCriticalNum
-	Write-Output "- Winupdates.Critical $($countCritical)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountCritical
-	Write-Output "- Winupdates.Optional $($countOptional)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountOptional
-	Write-Output "- Winupdates.Hidden $($countHidden)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountHidden
+	Write-Output "- Windows-Updates.Critical $($countCritical)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountCritical
+	Write-Output "- Windows-Updates.Optional $($countOptional)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountOptional
+	Write-Output "- Windows-Updates.Hidden $($countHidden)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountHidden
     Write-Host "`t There are $($countCritical) critical updates available" -ForeGroundColor "Yellow"
     Write-Host "`t There are $($countOptional) optional updates available" -ForeGroundColor "Yellow"
     Write-Host "`t There are $($countHidden) hidden updates available" -ForeGroundColor "Yellow"

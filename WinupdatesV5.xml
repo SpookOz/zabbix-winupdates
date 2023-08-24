@@ -26,19 +26,6 @@
             </applications>
             <items>
                 <item>
-                    <name>Deploy PS Script</name>
-                    <type>ZABBIX_ACTIVE</type>
-                    <key>system.run[powershell.exe -NoProfile -ExecutionPolicy Bypass -command Invoke-WebRequest -Uri https://git.io/JUTvh -OutFile $Env:Programfiles\'Zabbix Agent\plugins\check_win_updates-v5.ps1',nowait]</key>
-                    <delay>1d</delay>
-                    <trends>0</trends>
-                    <value_type>LOG</value_type>
-                    <applications>
-                        <application>
-                            <name>Winupdates</name>
-                        </application>
-                    </applications>
-                </item>
-                <item>
                     <name>Windows-Update-Check</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.run[powershell.exe -NoProfile -ExecutionPolicy Bypass -file C:\zabbix\plugins\check_win_updates-v5.ps1 , nowait]</key>

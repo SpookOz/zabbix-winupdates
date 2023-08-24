@@ -9,7 +9,7 @@ This is a Zabbix template to monitor and (optionally) run Windows updates for ac
 - Reports date of last updates.
 - Reports if a reboot is pending.
 - If there is a critical or important update pending or 3 or more optional updates, runs Windows Update to patch machine and reports back that updates are running (this can be disabled).
-- As part of above it writes a report file to C:\IT\Winupdates by default. This can be changed in the Powershell Script
+- As part of above it writes a report file to C:\zabbix\logs by default. This can be changed in the Powershell Script
 - Includes a panel for the Dashboard.
 - Includes triggers to warn for different update states.
 - Includes an option to auto-download the Powershell script so you don't have to manually deploy it to your hosts (disabled by default).
@@ -53,7 +53,7 @@ You also need to choose this option if you want to disable the auto-update featu
 
 This is a good option if you have a number of hosts you want to monitor but don't have an easy way to deploy the PS script to them all.
 
-1. Edit the template in Zabbix (Configuration / Templates / WinUpdates).
+1. Edit the template in Zabbix (Configuration / Templates / Windows-Updates).
 2. Go to the "Items" tab.
 3. You will see an item called "Deploy PS Script". Click on it to edit it.
 4. Click the button to enable (if not ticked already) the item and click "Update".
