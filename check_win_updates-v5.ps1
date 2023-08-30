@@ -304,15 +304,18 @@ if ($countHidden -gt 0) {
 	
 	$countCritical | Out-File -Encoding "ASCII" -FilePath $env:temp$CountCriticalNum
 	Write-Output "- Windows-Updates.Critical $($countCritical)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountCritical
+	Write-Output "- Windows-Updates.Important $($countImportant)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountImportant
 	Write-Output "- Windows-Updates.Optional $($countOptional)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountOptional
 	Write-Output "- Windows-Updates.Hidden $($countHidden)" | Out-File -Encoding "ASCII" -FilePath $env:temp$senderArgCountHidden
     Write-Host "`t There are $($countCritical) critical updates available" -ForeGroundColor "Yellow"
+    Write-Host "`t There are $($countImportant) important updates available" -ForeGroundColor "Yellow"
     Write-Host "`t There are $($countOptional) optional updates available" -ForeGroundColor "Yellow"
     Write-Host "`t There are $($countHidden) hidden updates available" -ForeGroundColor "Yellow"
 	
 	& $sender $senderArg1 $senderArg2 $senderArg3 $senderArg4 $env:temp$senderArgUpdateReboot -s "$hostname"
 	& $sender $senderArg1 $senderArg2 $senderArg3 $senderArg4 $env:temp$senderArgLastUpdated -s "$hostname"
 	& $sender $senderArg1 $senderArg2 $senderArg3 $senderArg4 $env:temp$senderArgCountCritical -s "$hostname"
+	& $sender $senderArg1 $senderArg2 $senderArg3 $senderArg4 $env:temp$senderArgCountImportant -s "$hostname"
 	& $sender $senderArg1 $senderArg2 $senderArg3 $senderArg4 $env:temp$senderArgCountOptional -s "$hostname"
 	& $sender $senderArg1 $senderArg2 $senderArg3 $senderArg4 $env:temp$senderArgCountHidden -s "$hostname"
 	& $sender $senderArg1 $senderArg2 $senderArg3 $senderArg5 $senderArgUpdating $senderArg6 $senderArg7 -s "$hostname"
